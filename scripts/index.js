@@ -178,28 +178,34 @@ form.addEventListener("submit", (event) => {
     clearInputFields(userName, userEmail, phoneNumber, userPassword);
   }
 });
-
+function renderLoginMsg() {
+  const statusMsgContainer = document.createElement("div");
+  const loginMsg = document.createElement("h1");
+  loginMsg.textContent = "Login Successful";
+  statusMsgContainer.append(loginMsg);
+  statusMsgContainer.classList.add("statusMsg");
+  statusMsgContainer.classList.add("success");
+  body.append(statusMsgContainer);
+}
 function checkLogin(login, password) {
   const userData = JSON.parse(localStorage.getItem("users"));
-  userData.forEach((e) => {
+  let result = false;
+  userData.some((e) => {
     if (e.email === login && e.password === password) {
-      renderLoginMsg();
-      return true;
-    } else {
-      renderWrongLoginMsh();
-      return false;
+      result = true;
     }
   });
+  return result;
 }
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   let loginEmail = login.value;
   let loginPwd = loginPassword.value;
-
-  if (checkLogin(loginEmail, loginPwd)) {
-    setStatusMsg(statusMsg, "ok", "You successfully logged in!");
+  let check = checkLogin(loginEmail, loginPwd);
+  if (check) {
+    renderLoginMsg();
   } else {
-    setStatusMsg(statusMsg, "error", "Login data doesn't exist!");
+    console.log("fail");
   }
 });
