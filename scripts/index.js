@@ -181,6 +181,15 @@ form.addEventListener("submit", (event) => {
 
 function checkLogin(login, password) {
   const userData = JSON.parse(localStorage.getItem("users"));
+  userData.forEach((e) => {
+    if (e.email === login && e.password === password) {
+      renderLoginMsg();
+      return true;
+    } else {
+      renderWrongLoginMsh();
+      return false;
+    }
+  });
 }
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
