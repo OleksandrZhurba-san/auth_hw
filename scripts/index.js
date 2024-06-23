@@ -187,6 +187,15 @@ function renderLoginMsg() {
   statusMsgContainer.classList.add("success");
   body.append(statusMsgContainer);
 }
+function renderErrorLoginMsg() {
+  const statusMsgContainer = document.createElement("div");
+  const loginMsg = document.createElement("h1");
+  loginMsg.textContent = "Login Failed";
+  statusMsgContainer.append(loginMsg);
+  statusMsgContainer.classList.add("statusMsg");
+  statusMsgContainer.classList.add("failed");
+  body.append(statusMsgContainer);
+}
 function checkLogin(login, password) {
   const userData = JSON.parse(localStorage.getItem("users"));
   let result = false;
@@ -206,6 +215,6 @@ loginForm.addEventListener("submit", (event) => {
   if (check) {
     renderLoginMsg();
   } else {
-    console.log("fail");
+    renderErrorLoginMsg();
   }
 });
